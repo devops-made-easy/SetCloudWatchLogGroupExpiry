@@ -6,7 +6,7 @@ Description: >
 
 Metadata:
   AWS::ServerlessRepo::Application:
-    Name: Set-CloudWatch-LogGroup-Expiry
+    Name: Set-CloudWatch-LogGroup- Expiry
     Description: set expiry to any newly created loggroup within your AWS Account.
     Author: devops-made-easy
     SpdxLicenseId: Apache-2.0
