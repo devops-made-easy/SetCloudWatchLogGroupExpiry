@@ -6,7 +6,7 @@ Description: >
 
 Metadata:
   AWS::ServerlessRepo::Application:
-    Name: Set-CloudWatch-LogGroup- Expiry
+    Name: Set-CloudWatch-LogGroup-Expiry
     Description: set expiry to any newly created loggroup within your AWS Account.
     Author: devops-made-easy
     SpdxLicenseId: Apache-2.0
@@ -33,11 +33,18 @@ Resources:
       Runtime: python3.6
       MemorySize: 128
       Timeout: 30
-      Role: 
       Environment:
         Variables:
           RETENTION_DAYS: 
             Ref: RetentionDays
+      Policies:
+        - Version: "2012-10-17"
+          Statement:
+          - Effect: "Allow"
+            Action:
+              - "logs:PutRetentionPolicy"
+            Resource:
+              !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:loggroup:*'
       Events:
         CloudWatchLogGroupEvent:
           Type: CloudWatchEvent
@@ -52,6 +59,7 @@ Resources:
                   - logs.amazonaws.com
                 eventName:
                   - CreateLogGroup
+  
 
 
 Outputs:
