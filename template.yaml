@@ -3,9 +3,26 @@ Transform: AWS::Serverless-2016-10-31
 Description: >
   SetCloudWatchLogGroupExpiry
 
-  Sample SAM Template for SetCloudWatchLogGroupExpiry
 
-# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Metadata:
+  AWS::ServerlessRepo::Application:
+    Name: Set-CloudWatch-LogGroup-Expiry
+    Description: set expiry to any newly created loggroup within your AWS Account.
+    Author: devops-made-easy
+    SpdxLicenseId: Apache-2.0
+    LicenseUrl: LICENSE
+    ReadmeUrl: README.md
+    Labels: ['lambda', 'sam', 'devops-made-easy', 'cloudwatch'] 
+    HomePageUrl: https://github.com/devops-made-easy/SetCloudWatchLogGroupExpiry
+    SemanticVersion: 0.0.1
+    SourceCodeUrl: https://github.com/devops-made-easy/SetCloudWatchLogGroupExpiry
+
+Parameters:
+  RetentionDays:
+    Default: 365
+    Type: Number
+    Description: Number of days that you want set for log group retention?
+
 Resources:
   SetCloudWatchLogGroupExpiry:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
@@ -19,7 +36,8 @@ Resources:
       Role: 
       Environment:
         Variables:
-          RETENTION_DAYS: 365
+          RETENTION_DAYS: 
+            Ref: RetentionDays
       Events:
         CloudWatchLogGroupEvent:
           Type: CloudWatchEvent
